@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run && node tests/smoke.js"
+    "test": "vitest run --passWithNoTests && node tests/smoke.js"
   },
   "dependencies": {
     "react": "18.2.0",

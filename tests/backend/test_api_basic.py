@@ -1,5 +1,10 @@
 import pytest
-from backend.app import create_app, db
+try:
+	# prefer top-level `app` if PYTHONPATH/root exports it
+	from app import create_app, db
+except Exception:
+	# fallback to package import (works inside containers without PYTHONPATH)
+	from backend.app import create_app, db
 
 
 @pytest.fixture
