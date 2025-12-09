@@ -1,0 +1,16 @@
+Flask==3.1.2
+Werkzeug==3.1.4
+Flask-SQLAlchemy==3.1.1
+Flask-Migrate==4.1.0
+flask-cors==3.0.10
+python-dotenv==1.0.0
+psycopg2-binary==2.9.10
+gunicorn==23.0.0
+requests==2.31.0
+PyJWT==2.8.0
+Flask-Mail==0.9.1
+authlib==1.2.0
+bcrypt==4.0.1
+itsdangerous==2.2.0
+PyMySQL==1.0.2
+stripe==5.0.0

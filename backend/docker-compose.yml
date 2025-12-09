@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: turismo
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  api:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_USER=root
+      - DB_PASS=1234
+      - DB_HOST=db
+      - DB_NAME=turismo
+      - SECRET_KEY=replace_this_secret
+      - JWT_SECRET=replace_jwt_secret
+      - STRIPE_SECRET_KEY=
+      - STRIPE_PUBLISHABLE_KEY=
+      - STRIPE_WEBHOOK_SECRET=
+      - GOOGLE_CLIENT_ID=
+      - GOOGLE_CLIENT_SECRET=
+      - GOOGLE_REDIRECT_URI=http://localhost:5000/auth/google/callback
+      - MAIL_SERVER=
+      - MAIL_PORT=587
+      - MAIL_USERNAME=
+      - MAIL_PASSWORD=
+volumes:
+  db_data:

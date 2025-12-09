@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: appdb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - appnet
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - appnet
+
+  backend:
+    build: ./backend
+    command: gunicorn app:app -w 4 -b 0.0.0.0:5000
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    ports:
+      - '5000:5000'
+    depends_on:
+      - db
+      - redis
+    networks:
+      - appnet
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    ports:
+      - '5173:5173'
+    depends_on:
+      - backend
+    networks:
+      - appnet
+
+volumes:
+  db_data:
+
+networks:
+  appnet:
+    driver: bridge
